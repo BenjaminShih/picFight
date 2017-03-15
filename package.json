@@ -1,0 +1,24 @@
+{
+  "name": "pic-fight",
+  "version": "1.0.0",
+  "description": "lets fight",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminShih/picFight.git"
+  },
+  "keywords": [
+    "pic",
+    "fight"
+  ],
+  "author": "BenjaminShih",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjaminShih/picFight/issues"
+  },
+  "homepage": "https://github.com/benjaminShih/picFight#readme",
+  "dependencies": {}
+}
