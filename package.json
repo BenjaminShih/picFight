@@ -4,7 +4,8 @@
   "description": "lets fight",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon ./server/start.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,14 @@
     "url": "https://github.com/benjaminShih/picFight/issues"
   },
   "homepage": "https://github.com/benjaminShih/picFight#readme",
-  "dependencies": {}
+  "dependencies": {
+    "koa": "^2.2.0",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-3": "^6.22.0"
+  }
 }
