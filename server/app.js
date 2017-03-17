@@ -1,16 +1,34 @@
 const Koa = require("koa");
 const path = require("path");
+const Router = require("koa-router");
+const fs = require("fs");
 const app = new Koa();
+const router = new Router();
+
+const indexPath = '../client/index.html'
+
+app.use(router.routes())
+	.use(router.allowedMethods())
 
 app.use(async (ctx, next) => {
 	const start = new Date();
 	await next();
 	const ms = new Date() - start;
-	console.log(`${ctx.method}${ctx.url} - ${ms}ms`)
+	console.log(`${ctx.method}${ctx.url} - ${ms}ms`);
 })
 
 app.use (ctx => {
-	ctx.body = 'hello'
+	let filePath = path.join(__dirname, indexPath);
+	let content = fs.readFileSync(filePath, 'binary');
+	ctx.body = content;
+})
+
+router.get('/client/assets/pics/qiaoqiaohua.jpg', async (ctx) => {
+	let picPath = path.join(__dirname, ".." + ctx.request.url)
+	let picContent = fs.readFileSync(picPath, 'binary');
+	ctx.status = 200;
+    ctx.res.write(picContent, 'binary')
+    ctx.res.end()
 })
 
 app.listen(3000);
