@@ -22,8 +22,11 @@
   },
   "homepage": "https://github.com/benjaminShih/picFight#readme",
   "dependencies": {
+    "busboy": "^0.2.14",
     "koa": "^2.2.0",
+    "koa-body": "^1.6.0",
     "koa-router": "^7.1.0",
+    "mongoose": "^4.9.0",
     "nodemon": "^1.11.0"
   },
   "devDependencies": {

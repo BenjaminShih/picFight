@@ -8,9 +8,6 @@
 			display: inline-block;
 			margin: 20px;
 		}
-		.pic__body {
-
-		}
 		.pic__text {
 			position: absolute;
 			bottom: 40px;
@@ -21,16 +18,14 @@
 			margin: 0 auto;
 			text-align: center;
 		}
-		.pic__edit__text {
-			
-		}
 		.pic__edit__clear {
 			cursor: pointer;
 			margin-left: 5px;
 		}
 	</style>
-	<!-- <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script> -->
 	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -38,32 +33,13 @@
 		<img class="pic__body" :src="item.url">
 		<div class="pic__text">{{item.text}}</div>
 		<div class="pic__edit">
-			<input type="text" class="pic__edit__text" v-model="item.text"><button class="pic__edit__clear" @click="clearPicText(item)">C</button>
+			<input type="text" class="pic__edit__text" v-model="item.text">
+			<button class="pic__edit__clear" @click="clearPicText(item)">C</button>
 		</div>
 	</div>
+	<input type="file" @change="upload">
 </div>
 <script>
-	// // 绑定事件到每个输入框，保证单独编辑当前图片
-	// $('.pic__edit input').each(function() {
-	// 	var _this = this
-	// 	$(this).on('keyup', function() {
-	// 		$(_this).parent().siblings('div').text(function() {
-	// 			return $(_this).val()
-	// 		})
-	// 	})
-	// })
-	// // 绑定事件到每个清空按钮，清空当前文本
-	// $('.pic__edit__clear').each(function() {
-	// 	var _this = this
-	// 	$(this).on('click', function() {
-	// 		$(_this).siblings('.pic__edit__text').val(function() {
-	// 			return ''
-	// 		})
-	// 		$(_this).parent().siblings('div').text(function() {
-	// 			return ''
-	// 		})
-	// 	})
-	// })
 	var app = new Vue({
 		el: '#app',
 		data: function() {
@@ -76,8 +52,22 @@
 		},
 		methods: {
 			clearPicText: function(item) {
-				item.text = ''
+				item.text = '';
 			},
+			upload: function(e) {
+				// let headers = {
+				// 	'content-type': 'multipart/form-data'
+				// }
+				console.log(e.target.files[0])
+				this.$http.post('/upload', {
+				    pic: e.target.files[0]
+			 	})
+				.then(function (response) {
+				    console.log('upload res -', response);
+				}, function(err) {
+					console.log('upload err -', err)
+				})
+			}
 		}
 	})
 </script>
