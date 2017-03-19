@@ -3,11 +3,11 @@ const path = require("path");
 const Router = require("koa-router");
 const fs = require("fs");
 const config = require("../config.js");
+const uploadFile = require('./uploadFile.js');
 const mongoose = require('mongoose');
-const Busboy = require('busboy');
 const app = new Koa();
 const router = new Router();
-var koaBody = require('koa-body');
+// var koaBody = require('koa-body');
 
 const rootPath = config.rootPath;
 
@@ -30,7 +30,7 @@ const indexPath = '/client/index.html';
 //         console.log('pic saved!');
 //     }
 // });
-app.use(koaBody({ multipart: true, formidable: { hash: 'md5' } }));
+// app.use(koaBody({ multipart: true, formidable: { hash: 'md5' } }));
 
 
 app.use(router.routes())
@@ -61,22 +61,15 @@ router.get('/client/assets/pics/:pic', async (ctx) => {
     ctx.res.end();
 })
 
-router.post('/upload', (ctx) => {
-	console.log(ctx.request.body.files['uploadfile'])
-	let file = ctx.request.body.files['uploadfile']
-	let picSavePath = rootPath + '/client/assets/pics/';
-	let saveTo = path.join(picSavePath, 'uploadpic'+ Math.random() + '.jpg');
-	file.pipe(fs.createWriteStream(saveTo));
-	// let busboy = new Busboy({headers: ctx.request.headers});
-	// let picSavePath = rootPath + '/client/assets/pics/';
-	// busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-		
-	// });
-	// busboy.on('finish', () => {
-	// 	ctx.status = 200;
-	// 	ctx.res.end();
-	// })
-	// ctx.request.pipe(busboy);
+router.post('/upload', async (ctx) => {
+	const picSavePath = rootPath + '/client/assets/pics/';
+	const result = await uploadFile(ctx, picSavePath);
+	ctx.status = 200;
+	if (result) {
+		ctx.body = { resp_code: '0000', resp_msg: '上传成功！' }
+		return;
+	}
+	ctx.body = { resp_code: '9999', resp_msg: '上传失败！' }
 })
 
 app.listen(3000);
