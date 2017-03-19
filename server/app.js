@@ -30,14 +30,12 @@ const indexPath = '/client/index.html';
 //         console.log('pic saved!');
 //     }
 // });
-
-app.use(koaBody({multipart:true}));
+app.use(koaBody({ multipart: true, formidable: { hash: 'md5' } }));
 
 
 app.use(router.routes())
 	.use(router.allowedMethods())
 
-// app.use(bodyParser())
 
 // 日志相关
 app.use(async (ctx, next) => {
@@ -64,18 +62,21 @@ router.get('/client/assets/pics/:pic', async (ctx) => {
 })
 
 router.post('/upload', (ctx) => {
-	console.log(ctx.request.body)
-	let busboy = new Busboy({headers: ctx.request.headers});
+	console.log(ctx.request.body.files['uploadfile'])
+	let file = ctx.request.body.files['uploadfile']
 	let picSavePath = rootPath + '/client/assets/pics/';
-	busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-		let savePath = path.join(picSavePath, path.basename(fieldname));
-		file.pipe(fs.createWriteStream(savePath));
-	});
-	busboy.on('finish', () => {
-		ctx.status = 200;
-		ctx.res.end();
-	})
-	ctx.request.pipe(busboy);
+	let saveTo = path.join(picSavePath, 'uploadpic'+ Math.random() + '.jpg');
+	file.pipe(fs.createWriteStream(saveTo));
+	// let busboy = new Busboy({headers: ctx.request.headers});
+	// let picSavePath = rootPath + '/client/assets/pics/';
+	// busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+		
+	// });
+	// busboy.on('finish', () => {
+	// 	ctx.status = 200;
+	// 	ctx.res.end();
+	// })
+	// ctx.request.pipe(busboy);
 })
 
 app.listen(3000);

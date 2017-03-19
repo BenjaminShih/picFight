@@ -58,10 +58,10 @@
 				// let headers = {
 				// 	'content-type': 'multipart/form-data'
 				// }
-				console.log(e.target.files[0])
-				this.$http.post('/upload', {
-				    pic: e.target.files[0]
-			 	})
+				let formData = new FormData();
+				formData.append('uploadfile', e.target.files[0]);
+				console.log('formData', formData)
+				this.$http.post('/upload', formData)
 				.then(function (response) {
 				    console.log('upload res -', response);
 				}, function(err) {
