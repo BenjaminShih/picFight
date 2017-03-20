@@ -15,6 +15,8 @@ module.exports = (ctx, savePath) => new Promise(resolve => {
     const newFilename = (new Date).getTime() + ext;
     // 文档路径
     const filePath = path.join(savePath, newFilename);
+    // promise resolve出去的参数
+    const result = {};
 
     // 以流的形式上传文档
     fileStream.pipe(fs.createWriteStream(filePath));
@@ -27,21 +29,24 @@ module.exports = (ctx, savePath) => new Promise(resolve => {
 
     // 上传结束
     fileStream.on('end', function() {
-      // console.log("upload end!");
-      return resolve(true);
+      console.log("upload end!");
+      result.isOk = true;
+      result.filePath = filePath;
+      return resolve(result);
     });
 
     // 上传出错
     fileStream.on('error', function(err) {
       console.error("uploadFile error.");
-      return resolve(false);
+      result.isOk = false;
+      return resolve(result);
     });
   });
 
-  // 若什么都没上传，则会直接完成
+  // 全部上传完成
   busboy.on('finish', () => {
-    // console.log("upload finish!");
-    return resolve(true);
+    console.log("busboy finish!");
+    // return resolve(result);
   });
 
   ctx.req.pipe(busboy);
