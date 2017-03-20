@@ -23,7 +23,18 @@ function savePicToDB(url) {
 	});
 }
 
+function findPicsFromDB(query) {
+	return new Promise((resolve, reject) => {
+		picsModel.find(query, (err, arr) => { 
+			if(err) {
+				return reject(err);
+			}
+			return resolve(arr);
+		});
+	});
+}
 
 module.exports = {
-	savePicToDB: savePicToDB,
+	savePicToDB,
+	findPicsFromDB,
 }

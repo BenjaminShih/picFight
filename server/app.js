@@ -5,10 +5,12 @@ const fs = require("fs");
 const config = require("../config.js");
 const uploadFile = require('./utils/uploadFile.js');
 const mongoose = require('mongoose');
+const koaBody = require('koa-body');
+
 const app = new Koa();
 const router = new Router();
 
-const { savePicToDB } = require('./controllers/pics.js')
+const { savePicToDB, findPicsFromDB } = require('./controllers/pics.js')
 
 
 const rootPath = config.rootPath;
@@ -22,8 +24,9 @@ let db = mongoose.connect('mongodb://localhost:27017/picFight');
 
 
 // koa-body相关，暂时先注释
-// var koaBody = require('koa-body');
+app.use(koaBody());
 // app.use(koaBody({ multipart: true, formidable: { hash: 'md5' } }));
+
 
 
 app.use(router.routes())
@@ -43,6 +46,15 @@ app.use (ctx => {
 	let filePath = path.join(rootPath, indexPath);
 	let content = fs.readFileSync(filePath, 'binary');
 	ctx.body = content;
+})
+
+router.post('/pics', async (ctx) => {
+    await findPicsFromDB({}).then((arr) => {
+		ctx.status = 200;
+		ctx.body = arr;
+	}).catch((err) => {
+		console.log('find pics failed---', err)
+	})
 })
 
 // 接收图片路径返回图片

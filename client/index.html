@@ -14,6 +14,10 @@
 			width: 100%;
 			text-align: center;
 		}
+		.pic__body {
+			width: 190px;
+			height: 190px;
+		}
 		.pic__edit {
 			margin: 0 auto;
 			text-align: center;
@@ -30,7 +34,7 @@
 <body>
 <div id="app">
 	<div class="pic" v-for="item in picArr">
-		<img class="pic__body" :src="item.ur">
+		<img class="pic__body" :src="item.url">
 		<div class="pic__text">{{item.text}}</div>
 		<div class="pic__edit">
 			<input type="text" class="pic__edit__text" v-model="item.text">
@@ -44,30 +48,40 @@
 		el: '#app',
 		data: function() {
 			return{
-				picArr : [
-					{text: '', url: '/client/assets/pics/qiaoqiaohua.jpg'},
-					{text: '', url: '/client/assets/pics/laba.jpg'},
-				]
+				picArr : []
 			}
 		},
+		mounted: function() {
+			// 初始化加载数据库中的图片
+			this.loadPics();
+		},
 		methods: {
+			// 清空输入框
 			clearPicText: function(item) {
 				item.text = '';
 			},
+			// 上传图片
 			upload: function(e) {
-				// let headers = {
-				// 	'content-type': 'multipart/form-data'
-				// }
 				let formData = new FormData();
 				formData.append('uploadfile', e.target.files[0]);
 				console.log('formData', formData)
 				this.$http.post('/upload', formData)
 				.then(function (response) {
-				    console.log('upload res -', response);
+				    console.log('upload success!');
+				    this.loadPics()
 				}, function(err) {
 					console.log('upload err -', err)
 				})
-			}
+			},
+			// 加载图片
+			loadPics: function() {
+				this.$http.post('/pics', {}).then(function(res) {
+					let arr =  res.data
+					if(Array.isArray(arr)) {
+						this.picArr = arr;
+					}
+				})
+			},
 		}
 	})
 </script>
