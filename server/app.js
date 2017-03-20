@@ -3,10 +3,12 @@ const path = require("path");
 const Router = require("koa-router");
 const fs = require("fs");
 const config = require("../config.js");
-const uploadFile = require('./uploadFile.js');
+const uploadFile = require('./utils/uploadFile.js');
 const mongoose = require('mongoose');
 const app = new Koa();
 const router = new Router();
+
+const { savePicToDB } = require('./controllers/pics.js')
 
 
 const rootPath = config.rootPath;
@@ -16,25 +18,7 @@ const indexPath = '/client/index.html';
 // 配置mongoose，避免报错
 // (node:5590) DeprecationWarning: Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
 mongoose.Promise = global.Promise;
-var db = mongoose.connect('mongodb://localhost:27017/picFight');
-
-var picsSchema = new mongoose.Schema({
-    url: String,
-});
-
-var picsModel = mongoose.model('pics', picsSchema);
-
-function savePicToDB(url) {
-	var picsEntity = new picsModel({
-	    url: url,
-	}).save( function( err ){
-	    if(!err){
-	        console.log('pic is already saved in db!');
-	    } else {
-	    	console.log('mongon error when pic saving!');
-	    }
-	});
-}
+let db = mongoose.connect('mongodb://localhost:27017/picFight');
 
 
 // koa-body相关，暂时先注释
