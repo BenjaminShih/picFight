@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemon": "nodemon ./server/start.js"
+    "nodemon": "nodemon ./server/start.js",
+    "b": "cross-env NODE_ENV=production browserify -e client/js/index.js > dist/js/bundle.js",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -27,12 +29,17 @@
     "koa-body": "^1.6.0",
     "koa-router": "^7.1.0",
     "mongoose": "^4.9.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "vue": "^2.2.4",
+    "vue-resource": "^1.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
-    "babel-preset-stage-3": "^6.22.0"
+    "babel-preset-stage-3": "^6.22.0",
+    "cross-env": "^3.2.4",
+    "vue-loader": "^11.1.4",
+    "webpack": "^2.2.1"
   }
 }

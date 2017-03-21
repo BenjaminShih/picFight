@@ -66,6 +66,15 @@ router.get('/client/assets/pics/:pic', async (ctx) => {
     ctx.res.end();
 })
 
+// 返回js
+router.get('/dist/js/bundle.js', async (ctx) => {
+	let jsPath = path.join(rootPath, ctx.request.url);
+	let jsContent = fs.readFileSync(jsPath, 'binary');
+	ctx.status = 200;
+    ctx.res.write(jsContent, 'binary');
+    ctx.res.end();
+})
+
 // 上传图片
 router.post('/upload', async (ctx) => {
 	// 图片相对路径
