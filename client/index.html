@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>picFight</title>
+	<title><%= htmlWebpackPlugin.options.title %></title>
 	<style type="text/css">
 		.pic {
 			position: relative;
@@ -40,6 +40,5 @@
 	</div>
 	<input type="file" @change="upload">
 </div>
-<script type="text/javascript" src="/dist/js/bundle.js"></script>
 </body>
 </html>

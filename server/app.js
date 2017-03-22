@@ -15,7 +15,7 @@ const { savePicToDB, findPicsFromDB } = require('./controllers/pics.js')
 
 const rootPath = config.rootPath;
 
-const indexPath = '/client/index.html';
+const indexPath = '/dist/index.html';
 
 // 配置mongoose，避免报错
 // (node:5590) DeprecationWarning: Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
@@ -67,8 +67,8 @@ router.get('/client/assets/pics/:pic', async (ctx) => {
 })
 
 // 返回js
-router.get('/dist/js/bundle.js', async (ctx) => {
-	let jsPath = path.join(rootPath, ctx.request.url);
+router.get('/bundle.js', async (ctx) => {
+	let jsPath = path.join(rootPath+ '/dist', ctx.request.url);
 	let jsContent = fs.readFileSync(jsPath, 'binary');
 	ctx.status = 200;
     ctx.res.write(jsContent, 'binary');
