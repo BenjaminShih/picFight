@@ -5,7 +5,7 @@
 			<div class="pic__text">{{item.text}}</div>
 			<div class="pic__edit">
 				<input type="text" class="pic__edit__text" v-model="item.text">
-				<button class="pic__edit__clear" @click="clearPicText(item)">C</button>
+				<button class="pic__edit__clear" @click="clearPicText(item)">C222</button>
 			</div>
 		</div>
 		<input type="file" @change="upload">

@@ -7,6 +7,13 @@ const uploadFile = require('./utils/uploadFile.js');
 const mongoose = require('mongoose');
 const koaBody = require('koa-body');
 
+const convert = require('koa-convert')
+const webpack = require('webpack')
+
+const webpackHotMiddleware = require('koa-webpack-hot-middleware')
+const webpackConfig = require('../webpack.config.js')
+let clientCompiler = webpack(webpackConfig)
+
 const app = new Koa();
 const router = new Router();
 
@@ -32,6 +39,14 @@ app.use(koaBody());
 app.use(router.routes())
 	.use(router.allowedMethods())
 
+// let koaWebpackHotMiddleware = 
+// koaWebpackHotMiddleware._name = 'koaWebpackHotMiddleware'
+
+app.use(convert(require("koa-webpack-dev-middleware"))(clientCompiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+}));
+
+app.use(convert(webpackHotMiddleware(clientCompiler)));
 
 // 日志相关
 app.use(async (ctx, next) => {

@@ -1,12 +1,14 @@
 var webpack = require('webpack');
+var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
 	// 打包入口文件
-	entry: './client/js/index.js',
+	entry: ['webpack-hot-middleware/client', './client/js/index.js'],
 	output: {
-		path: './dist',
+		path: path.join(__dirname, './dist'),
 		filename: 'bundle.js',
+		publicPath: '/',
 	},
 	// 按照模板生成html用于被插入bundle.js，自动引入bundle.js
 	plugins: [
@@ -15,7 +17,10 @@ module.exports = {
 	      template: 'client/index.html',
 	      // 是否插入script等标签
     	  inject: true,
-	    })
+	    }),
+	    // new webpack.optimize.OccurenceOrderPlugin(),
+	    new webpack.HotModuleReplacementPlugin(),
+	    new webpack.NoErrorsPlugin()
 	],
 	// 模块配置
 	module: {
