@@ -23,6 +23,16 @@ module.exports = {
 		loaders: [
 			{test: /\.vue$/, loader: 'vue-loader'},
 			{test: /\.css$/, loader: ['style-loader', 'css-loader']},
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+                    loader: 'babel-loader',
+                    // todo 环境变量设置
+        			// options: {
+          	// 			presets: ['env']
+        			}
+      		},
 		]
 	},
 	// 防止打包vue报错，error: You are using the runtime-only build of Vue where the template compiler is not available. 

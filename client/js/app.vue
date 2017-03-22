@@ -46,6 +46,9 @@
 				this.$http.post('/pics', {}).then(function(res) {
 					let arr =  res.data
 					if(Array.isArray(arr)) {
+						arr.forEach((i) => {
+							i.text = '';
+						});
 						this.picArr = arr;
 					}
 				})
