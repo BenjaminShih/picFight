@@ -14,36 +14,35 @@
 
 <script type="text/javascript">
 	export default {
-		data: function() {
+		data() {
 			return{
 				picArr : []
 			}
 		},
-		mounted: function() {
+		mounted() {
 			// 初始化加载数据库中的图片
 			this.loadPics();
 		},
 		methods: {
 			// 清空输入框
-			clearPicText: function(item) {
+			clearPicText(item) {
 				item.text = '';
 			},
 			// 上传图片
-			upload: function(e) {
+			upload(e) {
 				let formData = new FormData();
 				formData.append('uploadfile', e.target.files[0]);
-				console.log('formData', formData)
 				this.$http.post('/upload', formData)
-				.then(function (response) {
+				.then((response) => {
 				    console.log('upload success!');
 				    this.loadPics()
-				}, function(err) {
+				}, (err) => {
 					console.log('upload err -', err)
 				})
 			},
 			// 加载图片
-			loadPics: function() {
-				this.$http.post('/pics', {}).then(function(res) {
+			loadPics() {
+				this.$http.post('/pics', {}).then((res) => {
 					let arr =  res.data
 					if(Array.isArray(arr)) {
 						arr.forEach((i) => {
