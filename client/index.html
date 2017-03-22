@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title><%= htmlWebpackPlugin.options.title %></title>
-	<style type="text/css">
+	<!-- <style type="text/css">
 		.pic {
 			position: relative;
 			display: inline-block;
@@ -26,11 +26,11 @@
 			cursor: pointer;
 			margin-left: 5px;
 		}
-	</style>
+	</style> -->
 </head>
 <body>
 <div id="app">
-	<div class="pic" v-for="item in picArr">
+	<!-- <div class="pic" v-for="item in picArr">
 		<img class="pic__body" :src="item.url">
 		<div class="pic__text">{{item.text}}</div>
 		<div class="pic__edit">
@@ -38,7 +38,8 @@
 			<button class="pic__edit__clear" @click="clearPicText(item)">C</button>
 		</div>
 	</div>
-	<input type="file" @change="upload">
+	<input type="file" @change="upload"> -->
+	<app></app>
 </div>
 </body>
 </html>

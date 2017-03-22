@@ -8,6 +8,7 @@ module.exports = {
 		path: './dist',
 		filename: 'bundle.js',
 	},
+	// 按照模板生成html用于被插入bundle.js，自动引入bundle.js
 	plugins: [
 	    new HtmlWebpackPlugin({
 	      title: 'pic fight',
@@ -24,6 +25,7 @@ module.exports = {
 			{test: /\.css$/, loader: ['style-loader', 'css-loader']},
 		]
 	},
+	// 防止打包vue报错，error: You are using the runtime-only build of Vue where the template compiler is not available. 
 	resolve: {
 	    alias: {
 	        vue: 'vue/dist/vue.js'
