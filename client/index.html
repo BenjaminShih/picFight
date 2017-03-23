@@ -2,43 +2,13 @@
 <html>
 <head>
 	<title><%= htmlWebpackPlugin.options.title %></title>
-	<!-- <style type="text/css">
-		.pic {
-			position: relative;
-			display: inline-block;
-			margin: 20px;
-		}
-		.pic__text {
-			position: absolute;
-			bottom: 40px;
-			width: 100%;
-			text-align: center;
-		}
-		.pic__body {
-			width: 190px;
-			height: 190px;
-		}
-		.pic__edit {
-			margin: 0 auto;
-			text-align: center;
-		}
-		.pic__edit__clear {
-			cursor: pointer;
-			margin-left: 5px;
-		}
-	</style> -->
+	<!--貌似mdl不支持webpack，暂时先引入cdn吧-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
 <body>
 <div id="app">
-	<!-- <div class="pic" v-for="item in picArr">
-		<img class="pic__body" :src="item.url">
-		<div class="pic__text">{{item.text}}</div>
-		<div class="pic__edit">
-			<input type="text" class="pic__edit__text" v-model="item.text">
-			<button class="pic__edit__clear" @click="clearPicText(item)">C</button>
-		</div>
-	</div>
-	<input type="file" @change="upload"> -->
 	<app></app>
 </div>
 </body>
