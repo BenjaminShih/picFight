@@ -5,7 +5,13 @@
 			<div class="pic__text">{{item.text}}</div>
 			<div class="pic__edit">
 				<input type="text" class="pic__edit__text" v-model="item.text">
-				<button class="pic__edit__clear" @click="clearPicText(item)">C222</button>
+				<form action="#">
+				  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				    <input class="mdl-textfield__input" type="text" id="sample3">
+				    <label class="mdl-textfield__label" for="sample3">Text...</label>
+				  </div>
+				</form>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="clearPicText(item)">C</button>
 			</div>
 		</div>
 		<input type="file" @change="upload">

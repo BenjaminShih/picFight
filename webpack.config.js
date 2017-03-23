@@ -31,12 +31,12 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
-				use: {
-                    loader: 'babel-loader',
-                    // todo 环境变量设置
-        			// options: {
-          	// 			presets: ['env']
-        			}
+                loader: 'babel-loader',
+      		},
+      		{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+                loader: 'exports-loader',
       		},
 		]
 	},
