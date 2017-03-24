@@ -35,8 +35,14 @@ module.exports = {
 	module: {
 		// 配置加载器
 		loaders: [
-			{test: /\.vue$/, loader: 'vue-loader'},
-			{test: /\.css$/, loader: ['style-loader', 'css-loader']},
+			{
+				test: /\.vue$/,
+				loader: ['vue-loader', 'eslint-loader']
+			},
+			{
+				test: /\.css$/,
+				loader: ['style-loader', 'css-loader']
+			},
 			{
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,

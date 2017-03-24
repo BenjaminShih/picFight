@@ -23,6 +23,7 @@
 	export default {
 		data() {
 			return{
+				// 图片对象数组
 				picArr: [],
 				// 正在加载
 				loading: false,

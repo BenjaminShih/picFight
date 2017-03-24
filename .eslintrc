@@ -1,15 +1,9 @@
 {
-  globals: {
-    'window': true,
-    'AMap': true,
-  },
-  env: {
-    'browser': true,
-    'node': true,
-    'es6': true
-  },
   parser: "babel-eslint",
   "rules": {
   	"max-len": [1, 120, 2, {ignoreComments: true}]
-  }
+  },
+  plugins: [
+    'html',
+  ],
 }
