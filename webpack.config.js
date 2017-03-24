@@ -33,11 +33,14 @@ module.exports = {
 				exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader',
       		},
+      		// 字体文件加载器，不加会出现如下错误
+      		// ERROR in ./~/iview/dist/styles/fonts/ionicons.eot?v=2.0.0
+  			// Module parse failed: /Users/sjn/my-own-projects/picFight/node_modules/iview/dist/styles/fonts/ionicons.eot?v=2.0.0 Unexpected character '�' (1:0)
+			// You may need an appropriate loader to handle this file type.
       		{
-				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
-                loader: 'exports-loader',
-      		},
+		        test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+		        loader: 'file-loader'
+		    },
 		]
 	},
 	// 防止打包vue报错，error: You are using the runtime-only build of Vue where the template compiler is not available. 

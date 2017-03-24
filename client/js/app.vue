@@ -2,19 +2,16 @@
 	<div>
 		<div class="pic" v-for="item in picArr">
 			<img class="pic__body" :src="item.url">
-			<div class="pic__text">{{item.text}}</div>
+			<div class="pic__text">666{{item.text}}</div>
 			<div class="pic__edit">
-				<input type="text" class="pic__edit__text" v-model="item.text">
-				<form action="#">
-				  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				    <input class="mdl-textfield__input" type="text" id="sample3">
-				    <label class="mdl-textfield__label" for="sample3">Text...</label>
-				  </div>
-				</form>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="clearPicText(item)">C</button>
+				<Input v-model="item.text" style="width: auto" placeholder="your text ..."></Input>
+				<Button type="primary" @click="clearPicText(item)">C</Button>
 			</div>
 		</div>
 		<input type="file" @change="upload">
+		<Upload action="/upload" :on-success="uploadSuccess" :on-error='uploadError'>
+        	<Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
+    	</Upload>
 	</div>
 </template>
 
@@ -40,11 +37,19 @@
 				formData.append('uploadfile', e.target.files[0]);
 				this.$http.post('/upload', formData)
 				.then((response) => {
-				    console.log('upload success!');
-				    this.loadPics()
+				  
 				}, (err) => {
 					console.log('upload err -', err)
 				})
+			},
+			// 图片上传成功后，加载图片
+			uploadSuccess() {
+				console.log('upload success!');
+				this.loadPics()
+			},
+			// 图片上传失败后，提示信息
+			uploadError() {
+				console.log('upload error!');
 			},
 			// 加载图片
 			loadPics() {
