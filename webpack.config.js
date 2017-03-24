@@ -20,7 +20,16 @@ module.exports = {
 	    }),
 	    // new webpack.optimize.OccurenceOrderPlugin(),
 	    new webpack.HotModuleReplacementPlugin(),
-	    new webpack.NoErrorsPlugin()
+	    new webpack.NoErrorsPlugin(),
+	    new webpack.LoaderOptionsPlugin({
+         // test: /\.xxx$/, // may apply this only for some modules
+         options: {
+           eslint: {
+		      // 以更友好的格式输出eslint错误信息
+		      formatter: require('eslint-friendly-formatter')
+		   },
+         }
+       })
 	],
 	// 模块配置
 	module: {
@@ -31,7 +40,7 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
+                loader: ['babel-loader', 'eslint-loader'],
       		},
       		// 字体文件加载器，不加会出现如下错误
       		// ERROR in ./~/iview/dist/styles/fonts/ionicons.eot?v=2.0.0

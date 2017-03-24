@@ -1,17 +1,21 @@
 <template>
 	<div>
-		<div class="pic" v-for="item in picArr">
+		<div class="spin-container" v-if="loading">
+	        <Spin fix></Spin>
+	    </div>
+	    <div id="main-wrapper" v-if="!loading">
+	    	<div class="pic" v-for="item in picArr">
 			<img class="pic__body" :src="item.url">
-			<div class="pic__text">666{{item.text}}</div>
+			<div class="pic__text">{{item.text}}</div>
 			<div class="pic__edit">
 				<Input v-model="item.text" style="width: auto" placeholder="your text ..."></Input>
 				<Button type="primary" @click="clearPicText(item)">C</Button>
 			</div>
 		</div>
-		<input type="file" @change="upload">
 		<Upload action="/upload" :on-success="uploadSuccess" :on-error='uploadError'>
         	<Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
     	</Upload>
+	    </div>
 	</div>
 </template>
 
@@ -19,7 +23,9 @@
 	export default {
 		data() {
 			return{
-				picArr : []
+				picArr: [],
+				// 正在加载
+				loading: false,
 			}
 		},
 		mounted() {
@@ -31,17 +37,17 @@
 			clearPicText(item) {
 				item.text = '';
 			},
-			// 上传图片
-			upload(e) {
-				let formData = new FormData();
-				formData.append('uploadfile', e.target.files[0]);
-				this.$http.post('/upload', formData)
-				.then((response) => {
+			// // 上传图片
+			// upload(e) {
+			// 	let formData = new FormData();
+			// 	formData.append('uploadfile', e.target.files[0]);
+			// 	this.$http.post('/upload', formData)
+			// 	.then((response) => {
 				  
-				}, (err) => {
-					console.log('upload err -', err)
-				})
-			},
+			// 	}, (err) => {
+			// 		console.log('upload err -', err)
+			// 	})
+			// },
 			// 图片上传成功后，加载图片
 			uploadSuccess() {
 				console.log('upload success!');
@@ -53,7 +59,9 @@
 			},
 			// 加载图片
 			loadPics() {
+				this.loading = true
 				this.$http.post('/pics', {}).then((res) => {
+					this.loading = false
 					let arr =  res.data
 					if(Array.isArray(arr)) {
 						arr.forEach((i) => {
