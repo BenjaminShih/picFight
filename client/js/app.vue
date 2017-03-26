@@ -1,5 +1,15 @@
 <template>
 	<div>
+	<div id="top">
+		<Row>
+			<Col span="4">
+				picFight
+			</Col>
+			<Col span="20">
+				
+			</Col>
+		</Row>
+	</div>
 		<div class="spin-container" v-if="loading">
 	        <Spin fix></Spin>
 	    </div>
@@ -77,6 +87,9 @@
 		
 </script>
 <style type="text/css">
+	#top {
+		height: 50px;
+	}
 	.pic {
 		position: relative;
 		display: inline-block;
@@ -89,6 +102,7 @@
 		text-align: center;
 	}
 	.pic__body {
+		transition: border .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out;
 		width: 190px;
 		height: 190px;
 	}
