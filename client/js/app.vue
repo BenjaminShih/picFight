@@ -86,10 +86,9 @@
 	}
 		
 </script>
-<style type="text/css">
-	#top {
-		height: 50px;
-	}
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+	#top
+		height 50px
 	.pic {
 		position: relative;
 		display: inline-block;

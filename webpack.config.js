@@ -37,10 +37,11 @@ module.exports = {
 		    // vue-loader配置
 			vue: {
 				// vue文件中的loader配置
-				// loaders: {
+				loaders: {
 					// 使用eslint-loader, babel-loader加载vue文件中的js部分,注意顺序是【右往左】!
 					// js: 'babel!eslint'
-				// },
+					css: ['style-loader', 'css-loader', 'postcss-loader', 'stylus-loader']
+				},
 				// postcss配置,把vue文件中的样式部分,做后续处理
 				postcss: [
 					// 添加浏览器前缀
