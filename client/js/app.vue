@@ -6,7 +6,6 @@
 				picFight
 			</Col>
 			<Col span="20">
-				
 			</Col>
 		</Row>
 	</div>
@@ -48,18 +47,6 @@
 			clearPicText(item) {
 				item.text = '';
 			},
-			// // 上传图片
-			// upload(e) {
-			// 	let formData = new FormData();
-			// 	formData.append('uploadfile', e.target.files[0]);
-			// 	this.$http.post('/upload', formData)
-			// 	.then((response) => {
-				  
-			// 	}, (err) => {
-			// 		console.log('upload err -', err)
-			// 	})
-			// },
-			// 图片上传成功后，加载图片
 			uploadSuccess() {
 				console.log('upload success!');
 				this.loadPics()
@@ -89,28 +76,22 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 	#top
 		height 50px
-	.pic {
-		position: relative;
-		display: inline-block;
-		margin: 20px;
-	}
-	.pic__text {
-		position: absolute;
-		bottom: 40px;
-		width: 100%;
-		text-align: center;
-	}
-	.pic__body {
-		transition: border .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out;
-		width: 190px;
-		height: 190px;
-	}
-	.pic__edit {
-		margin: 0 auto;
-		text-align: center;
-	}
-	.pic__edit__clear {
-		cursor: pointer;
-		margin-left: 5px;
-	}
+	.pic 
+		position relative
+		display inline-block
+		margin 20px
+	.pic__text 
+		position absolute
+		bottom 40px
+		width 100%
+		text-align center
+	.pic__body
+		width 190px
+		height 190px
+	.pic__edit
+		margin 0 auto
+		text-align center
+	.pic__edit__clear
+		cursor: pointer
+		margin-left 5px
 </style>
