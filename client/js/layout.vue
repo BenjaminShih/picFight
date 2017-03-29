@@ -19,7 +19,10 @@
                 <div class="pic__text">{{item.text}}</div>
                 <div class="pic__edit">
                     <Input v-model="item.text" style="width: auto" placeholder="your text ..."></Input>
-                    <Button type="primary" @click="clearPicText(item)">C</Button>
+                    <div>
+                        <Button type="primary" @click="clearPicText(item)">C</Button>
+                        <Button type="primary" @click="deletePic(item)">D</Button>
+                    </div>
                 </div>
             </div>
             <Upload action="/upload" :on-success="uploadSuccess" :on-error='uploadError'>
@@ -51,6 +54,16 @@
 			clearPicText(item) {
 				item.text = '';
 			},
+            // 删除图片
+            deletePic(item) {
+				console.log('item._id', {_id: item._id})
+	            this.$http.post('/delete/pic', {_id: item._id}).then((res) => {
+                    if(res.data) {
+                    	console.log('delete result ----', res.data)
+                    }
+                    this.loadPics()
+	            })
+            },
 			uploadSuccess() {
 				console.log('upload success!');
 				this.loadPics()
@@ -114,7 +127,7 @@
 
     .pic__text
         position absolute
-        bottom 40px
+        top: 160px
         width 100%
         text-align center
 

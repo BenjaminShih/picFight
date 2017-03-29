@@ -17,7 +17,7 @@ let clientCompiler = webpack(webpackConfig)
 const app = new Koa();
 const router = new Router();
 
-const { savePicToDB, findPicsFromDB } = require('./controllers/pics.js')
+const { savePicToDB, findPicsFromDB, deletePicFromDB } = require('./controllers/pics.js')
 
 
 const rootPath = config.rootPath;
@@ -69,6 +69,17 @@ router.post('/pics', async (ctx) => {
 		ctx.body = arr;
 	}).catch((err) => {
 		console.log('find pics failed---', err)
+	})
+})
+
+// 删除一张图片
+router.post('/delete/pic', async(ctx) => {
+	console.log('ctx.req.body', ctx.request.body)
+	await deletePicFromDB(ctx.request.body).then((result) => {
+		ctx.status = 200;
+		ctx.body = result;
+	}).catch((err) => {
+		console.log('delete pic failed---', err)
 	})
 })
 

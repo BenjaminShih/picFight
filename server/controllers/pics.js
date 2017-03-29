@@ -34,7 +34,21 @@ function findPicsFromDB(query) {
 	});
 }
 
+// 删除一张图片
+function deletePicFromDB(query) {
+	console.log(query)
+	return new Promise((resolve, reject)=> {
+		picsModel.remove(query, (err, result) => {
+			if(err) {
+				return reject(err);
+			}
+			return resolve(result);
+		})
+	})
+}
+
 module.exports = {
 	savePicToDB,
 	findPicsFromDB,
+	deletePicFromDB,
 }

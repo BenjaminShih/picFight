@@ -5,6 +5,7 @@ import App from './app.vue'
 import iView from 'iview'
 import routes from './routes'
 import 'iview/dist/styles/iview.css'
+import '../assets/css/base.styl'
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
