@@ -5,6 +5,15 @@
                 <div class="header__logo">
                     picFight
                 </div>
+                <div class="header__uploader">
+                    <Upload action="/upload"
+                            :on-progress="uploading"
+                            :on-success="uploadSuccess"
+                            :on-error='uploadError'
+                            :show-upload-list="false">
+                        <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
+                    </Upload>
+                </div>
                 <div class="header__nav">
                     nav
                 </div>
@@ -25,9 +34,6 @@
                     </div>
                 </div>
             </div>
-            <Upload action="/upload" :on-success="uploadSuccess" :on-error='uploadError'>
-                <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
-            </Upload>
         </div>
         <div id="footer">
 
@@ -36,6 +42,7 @@
 </template>
 
 <script type="text/javascript">
+    let showUploading
 	export default {
 		data() {
 			return {
@@ -64,13 +71,18 @@
                     this.loadPics()
 	            })
             },
+            uploading() {
+                showUploading = this.$Message.loading('正在上传啦...', 0);
+            },
 			uploadSuccess() {
-				console.log('upload success!');
+                setTimeout(showUploading, 0);
+                this.$Message.success('上传成功！');
 				this.loadPics()
 			},
 			// 图片上传失败后，提示信息
-			uploadError() {
-				console.log('upload error!');
+			uploadError(err) {
+                setTimeout(showUploading, 0);
+                this.$Message.error('对方不想和你说话，并且向你抛出了一个上传异常！', err);
 			},
 			// 加载图片
 			loadPics() {
@@ -104,7 +116,7 @@
         width 90%
         margin 0 auto
 
-    .header__nav, .header__logo
+    .header__nav, .header__logo, .header__uploader
         display inline-block
 
     .header__nav

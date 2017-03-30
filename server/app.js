@@ -34,17 +34,13 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connect('mongodb://localhost:27017/picFight');
 
 
-// koa-body相关，暂时先注释
+// koa-body解析post的body
 app.use(koaBody());
-// app.use(koaBody({ multipart: true, formidable: { hash: 'md5' } }));
-
 
 
 app.use(router.routes())
 	.use(router.allowedMethods())
 
-// let koaWebpackHotMiddleware = 
-// koaWebpackHotMiddleware._name = 'koaWebpackHotMiddleware'
 
 app.use(convert(require("koa-webpack-dev-middleware"))(clientCompiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath
