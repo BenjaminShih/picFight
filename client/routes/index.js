@@ -1,5 +1,5 @@
-import layout from '../js/layout.vue'
-import error from '../js/error.vue'
+import layout from '../views/layout.vue'
+import error from '../views/error.vue'
 const routes = [
 	{
 		path: '/',

@@ -5,7 +5,7 @@ var autoprefixer = require('autoprefixer')
 
 module.exports = {
 	// 打包入口文件
-	entry: ['webpack-hot-middleware/client', './client/js/index.js'],
+	entry: ['webpack-hot-middleware/client', './client/index.js'],
 	output: {
 		path: path.join(__dirname, './dist'),
 		filename: 'bundle.js',

@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import App from './app.vue'
+import App from './views/app.vue'
 import 'iview/dist/styles/iview.css'
-import '../assets/css/base.styl'
-import '../plugins'
-import router from '../plugins/vue-router'
+import './assets/css/base.styl'
+import './plugins'
+import router from './plugins/vue-router'
 
 
 var app = new Vue({
