@@ -81,7 +81,7 @@
 			// 加载图片
 			loadPics() {
 				this.loading = true
-				this.$http.post('/pics', {}).then((res) => {
+				this.$axios.post('/pics', {}).then((res) => {
 					this.loading = false
 					let arr = res.data
 					if (Array.isArray(arr)) {
@@ -119,7 +119,7 @@
                 // 删除按钮动画开始
                 this.modalDeleteLoading = true
                 // 发送删除请求
-				this.$http.post('/delete/pic', {_id: this.picDelete._id, url: this.picDelete.url}).then((res) => {
+				this.$axios.post('/delete/pic', {_id: this.picDelete._id, url: this.picDelete.url}).then((res) => {
 					if (res.data) {
 						console.log('delete result ----', res.data)
 					}

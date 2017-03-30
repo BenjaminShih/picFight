@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/benjaminShih/picFight#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "busboy": "^0.2.14",
     "iview": "^2.0.0-rc.6",
     "koa": "^2.2.0",
@@ -33,7 +34,6 @@
     "nodemon": "^1.11.0",
     "stylus": "^0.54.5",
     "vue": "^2.2.4",
-    "vue-resource": "^1.2.1",
     "vue-router": "^2.3.1"
   },
   "devDependencies": {
