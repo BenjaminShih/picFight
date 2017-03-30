@@ -17,7 +17,11 @@ let clientCompiler = webpack(webpackConfig)
 const app = new Koa();
 const router = new Router();
 
+
+// 操作数据库函数
 const { savePicToDB, findPicsFromDB, deletePicFromDB } = require('./controllers/pics.js')
+
+
 
 
 const rootPath = config.rootPath;
@@ -72,10 +76,26 @@ router.post('/pics', async (ctx) => {
 	})
 })
 
+// 删除磁盘上的图片文件
+function deletePicOnDisk(file) {
+	console.log('fs.existsSync(file)', fs.existsSync(file), file)
+	if(fs.existsSync(file)) {
+		fs.unlink(file, (err) => {
+			if(err) {
+				console.log('delete pic on disk failed---', err)
+				return
+			}
+			console.log('delete pic on disk successfully!')
+		})
+	}
+}
+
 // 删除一张图片
 router.post('/delete/pic', async(ctx) => {
-	console.log('ctx.req.body', ctx.request.body)
+	console.log('ctx.request.body', ctx.request.body)
 	await deletePicFromDB(ctx.request.body).then((result) => {
+		let file = rootPath + ctx.request.body.url
+		deletePicOnDisk(file)
 		ctx.status = 200;
 		ctx.body = result;
 	}).catch((err) => {
@@ -97,8 +117,8 @@ router.get('/bundle.js', async (ctx) => {
 	let jsPath = path.join(rootPath+ '/dist', ctx.request.url);
 	let jsContent = fs.readFileSync(jsPath, 'binary');
 	ctx.status = 200;
-    ctx.res.write(jsContent, 'binary');
-    ctx.res.end();
+  ctx.res.write(jsContent, 'binary');
+  ctx.res.end();
 })
 
 // 上传图片

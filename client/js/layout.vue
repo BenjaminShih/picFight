@@ -56,8 +56,8 @@
 			},
             // 删除图片
             deletePic(item) {
-				console.log('item._id', {_id: item._id})
-	            this.$http.post('/delete/pic', {_id: item._id}).then((res) => {
+				console.log('item._id', {_id: item._id, url: item.url})
+	            this.$http.post('/delete/pic', {_id: item._id, url: item.url}).then((res) => {
                     if(res.data) {
                     	console.log('delete result ----', res.data)
                     }
