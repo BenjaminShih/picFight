@@ -30,7 +30,7 @@
                     <Input v-model="item.text" style="width: auto" placeholder="your text ..."></Input>
                     <div>
                         <Button type="primary" @click="clearPicText(item)">C</Button>
-                        <Button type="primary" @click="deletePic(item)">D</Button>
+                        <Button type="primary" @click="isDeletePic(item)">D</Button>
                     </div>
                 </div>
             </div>
@@ -38,11 +38,26 @@
         <div id="footer">
 
         </div>
+        <!--删除确认-->
+        <Modal v-model="deleteModalShow" width="260">
+            <p slot="header" style="color:#f60;text-align:center">
+                <Icon type="information-circled"></Icon>
+                <span>删除确认</span>
+            </p>
+            <div style="text-align:center">
+                <p>此任务删除后，你的表情包就飞了~</p>
+                <p>是否继续删除？</p>
+            </div>
+            <div slot="footer">
+                <Button type="error" size="large" long :loading="modalDeleteLoading" @click="comfirmDeletePic">删除
+                </Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script type="text/javascript">
-    let showUploading
+	let showUploading
 	export default {
 		data() {
 			return {
@@ -50,6 +65,12 @@
 				picArr: [],
 				// 正在加载
 				loading: false,
+				// 删除modal标志位
+				deleteModalShow: false,
+				// 被删除的图片缓存
+				picDelete: {},
+				// 删除按钮加载动画
+				modalDeleteLoading: false
 			}
 		},
 		mounted() {
@@ -57,33 +78,6 @@
 			this.loadPics();
 		},
 		methods: {
-			// 清空输入框
-			clearPicText(item) {
-				item.text = '';
-			},
-            // 删除图片
-            deletePic(item) {
-				console.log('item._id', {_id: item._id, url: item.url})
-	            this.$http.post('/delete/pic', {_id: item._id, url: item.url}).then((res) => {
-                    if(res.data) {
-                    	console.log('delete result ----', res.data)
-                    }
-                    this.loadPics()
-	            })
-            },
-            uploading() {
-                showUploading = this.$Message.loading('正在上传啦...', 0);
-            },
-			uploadSuccess() {
-                setTimeout(showUploading, 0);
-                this.$Message.success('上传成功！');
-				this.loadPics()
-			},
-			// 图片上传失败后，提示信息
-			uploadError(err) {
-                setTimeout(showUploading, 0);
-                this.$Message.error('对方不想和你说话，并且向你抛出了一个上传异常！', err);
-			},
 			// 加载图片
 			loadPics() {
 				this.loading = true
@@ -96,6 +90,47 @@
 						});
 						this.picArr = arr;
 					}
+				})
+			},
+			uploading() {
+				showUploading = this.$Message.loading('正在上传啦...', 0);
+			},
+			uploadSuccess() {
+				setTimeout(showUploading, 0);
+				this.$Message.success('上传成功！');
+				this.loadPics()
+			},
+			// 图片上传失败后，提示信息
+			uploadError(err) {
+				setTimeout(showUploading, 0);
+				this.$Message.error('对方不想和你说话，并且向你抛出了一个上传异常！', err);
+			},
+			// 清空输入框
+			clearPicText(item) {
+				item.text = '';
+			},
+			// 是否删除图片
+			isDeletePic(item) {
+				this.picDelete = item
+				this.deleteModalShow = true
+			},
+			// 确认删除图片
+			comfirmDeletePic() {
+                // 删除按钮动画开始
+                this.modalDeleteLoading = true
+                // 发送删除请求
+				this.$http.post('/delete/pic', {_id: this.picDelete._id, url: this.picDelete.url}).then((res) => {
+					if (res.data) {
+						console.log('delete result ----', res.data)
+					}
+					// 删除按钮动画关闭
+                    this.modalDeleteLoading = true
+                    // 关闭模态框
+					this.deleteModalShow = false
+                    // 提示删除信息
+                    this.$Message.success('删除成功！');
+					// 刷新图片列表
+					this.loadPics()
 				})
 			},
 		}
