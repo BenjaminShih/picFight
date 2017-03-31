@@ -25,12 +25,29 @@
         <div id="main" v-if="!loading">
             <div class="pic" v-for="item in picArr">
                 <img class="pic__body" :src="item.url">
-                <div class="pic__text">{{item.text}}</div>
+                <div class="pic__text"
+                     :style="{fontSize: item.fontSize + 'px', fontWeight: item.fontWeight, left: `calc(50% - ${item.xDis}px)`,  top:`calc(50% - ${item.yDis}px)`}">
+                    {{item.text}}
+                </div>
                 <div class="pic__edit">
                     <Input v-model="item.text" style="width: auto" placeholder="your text ..."></Input>
                     <div>
-                        <Button type="primary" @click="clearPicText(item)">C</Button>
-                        <Button type="primary" @click="isDeletePic(item)">D</Button>
+                        <Button type="warning" @click="clearPicText(item)">C</Button>
+                        <Button type="error" @click="isDeletePic(item)">D</Button>
+                        <Dropdown trigger="custom" :visible="item.picSettingShow">
+                            <Button type="primary" @click="togglePicSetting(item)">
+                                S
+                                <Icon type="arrow-down-b"></Icon>
+                            </Button>
+                            <Dropdown-menu slot="list">
+                                <div class="setting-list">
+                                    <div><span>字号:</span><Input-number :min="12" v-model="item.fontSize" size="small"></Input-number></div>
+                                    <div><span>粗细:</span><Input-number :min="400" :step="100" v-model="item.fontWeight" size="small"></Input-number></div>
+                                    <div><span>上下:</span><Input-number :min="0" v-model="item.yDis" size="small"></Input-number></div>
+                                    <div><span>左右:</span><Input-number :min="0" v-model="item.xDis" size="small"></Input-number></div>
+                                </div>
+                            </Dropdown-menu>
+                        </Dropdown>
                     </div>
                 </div>
             </div>
@@ -70,7 +87,7 @@
 				// 被删除的图片缓存
 				picDelete: {},
 				// 删除按钮加载动画
-				modalDeleteLoading: false
+				modalDeleteLoading: false,
 			}
 		},
 		mounted() {
@@ -87,6 +104,10 @@
 					if (Array.isArray(arr)) {
 						arr.forEach((i) => {
 							i.text = '';
+                            i.fontSize = 18;
+                            i.fontWeight = 800;
+                            i.xDis = 0;
+                            i.yDis = 0;
 						});
 						this.picArr = arr;
 					}
@@ -133,6 +154,11 @@
 					this.loadPics()
 				})
 			},
+            // 显示图片设置
+            togglePicSetting(item) {
+				// 对象属性必须用$set强制视图更新
+                this.$set(item, 'picSettingShow', !item.picSettingShow)
+            },
 		}
 	}
 
@@ -174,8 +200,10 @@
 
     .pic__text
         position absolute
-        top: 160px
-        width 100%
+        left:50%
+        top:50%
+        transform translateX(-50%) translateY(-50%)
+        display inline-block
         text-align center
 
     .pic__body
@@ -189,4 +217,15 @@
     .pic__edit__clear
         cursor: pointer
         margin-left 5px
+    .ivu-input-number
+        display inline-block
+        margin 5px auto
+    .setting-list > div
+        margin
+    .setting-list > div span:first-child
+        display inline-block
+        width 32px
+    .setting-list > div > div
+        display inline-block
+        width calc(100% - 42px)
 </style>
