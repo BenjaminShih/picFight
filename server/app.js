@@ -20,7 +20,7 @@ const router = new Router();
 
 // 操作数据库函数
 const { savePicToDB, findPicsFromDB, deletePicFromDB } = require('./controllers/pics.js')
-
+const { saveUserToDB } = require('./controllers/user.js')
 
 
 
@@ -88,7 +88,6 @@ function deletePicOnDisk(file) {
 
 // 删除一张图片
 router.post('/delete/pic', async(ctx) => {
-	console.log('ctx.request.body', ctx.request.body)
 	await deletePicFromDB(ctx.request.body).then((result) => {
 		let file = rootPath + ctx.request.body.url
 		deletePicOnDisk(file)
@@ -140,6 +139,17 @@ router.post('/upload', async (ctx) => {
 	}
 	// 上传失败文案
 	ctx.body = { resp_code: '9999', resp_msg: '上传失败！' }
+})
+
+router.post('/signup', async (ctx)=> {
+	await saveUserToDB(ctx.request.body).then((res) => {
+		if(res.result) {
+			ctx.status = 200;
+			ctx.body = result;
+		}
+	}).catch((err) => {
+		console.log('save user failed---', err)
+	})
 })
 
 app.listen(3000);
