@@ -5,11 +5,11 @@
                 <Tabs type="card">
                     <Tab-pane label="登录">
                         <label for="username">账号：</label>
-                        <Input placeholder="请输入账号"></Input>
+                        <Input v-model="signinAccount" placeholder="请输入账号"></Input>
                         <label for="password">密码：</label>
-                        <Input type="password" placeholder="请输入密码"></Input>
+                        <Input v-model="signinPassword" type="password" placeholder="请输入密码"></Input>
                         <div class="sign-in-btn">
-                            <Button type="primary" long>登录</Button>
+                            <Button type="primary" long @click="signin">登录</Button>
                         </div>
                     </Tab-pane>
                     <Tab-pane label="注册">
@@ -32,6 +32,10 @@
     export default {
         data() {
         	return {
+                // 登录账号
+                signinAccount: '',
+                // 登录密码
+                signinPassword: '',
         		// 注册账号
                 signupAccount: '',
                 // 注册密码
@@ -41,8 +45,23 @@
             }
         },
         methods: {
+        	// 登录
+	        signin(){
+                this.$axios.post('/signin', {
+                    account: this.signinAccount,
+                    password: this.signinPassword
+                }).then((res) => {
+                    if(res.data) {
+                        console.log('signin sucessfully ---', res.data)
+                        this.$Message.success('登录成功啦！');
+                        this.$router.push('/')
+                    } else {
+	                    this.$Message.error('登录失败了哦！');
+                    }
+                })
+            },
+            // 注册
             signup(){
-            	console.log(66)
                 if(this.signupPassword === this.rePassword) {
                     this.$axios.post('/signup', {
                         account: this.signupAccount,
@@ -52,6 +71,8 @@
                           console.log('save data sucessfully ---', res.data)
                           this.$Message.success('用户创建成功啦！');
                           this.$router.push('/')
+                        } else {
+                          this.$Message.success('用户创建失败了哦！');
                         }
                     })
                 } else {

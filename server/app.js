@@ -20,7 +20,8 @@ const router = new Router();
 
 // 操作数据库函数
 const { savePicToDB, findPicsFromDB, deletePicFromDB } = require('./controllers/pics.js')
-const { saveUserToDB } = require('./controllers/user.js')
+const { saveUserToDB, findUserFromDB } = require('./controllers/user.js')
+
 
 
 
@@ -141,14 +142,33 @@ router.post('/upload', async (ctx) => {
 	ctx.body = { resp_code: '9999', resp_msg: '上传失败！' }
 })
 
+// 注册
 router.post('/signup', async (ctx)=> {
 	await saveUserToDB(ctx.request.body).then((res) => {
-		if(res.result) {
+		if(res) {
 			ctx.status = 200;
-			ctx.body = result;
+			ctx.body = true;
 		}
 	}).catch((err) => {
 		console.log('save user failed---', err)
+	})
+})
+
+
+// 登录
+router.post('/signin', async (ctx)=> {
+	console.log('ctx.request.body', ctx.request.body)
+	await findUserFromDB(ctx.request.body).then((res) => {
+		console.log('res', res)
+		if(res) {
+			ctx.status = 200;
+			ctx.body = true;
+		} else {
+			ctx.status = 200;
+			ctx.body = false;
+		}
+	}).catch((err) => {
+		console.log('find user failed---', err)
 	})
 })
 
