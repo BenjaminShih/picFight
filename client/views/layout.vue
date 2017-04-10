@@ -1,27 +1,6 @@
 <template>
     <div id="wrapper">
-        <div id="header">
-            <div class="header__body">
-                <div class="header__logo">
-                    picFight
-                </div>
-                <div class="header__uploader">
-                    <Upload action="/upload"
-                            :on-progress="uploading"
-                            :on-success="uploadSuccess"
-                            :on-error='uploadError'
-                            :show-upload-list="false">
-                        <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
-                    </Upload>
-                </div>
-                <div class="header__nav">
-                    nav
-                </div>
-            </div>
-        </div>
-        <!-- 	<div class="spin-container" v-if="loading">
-        <Spin fix></Spin>
-        </div> -->
+        <layout-header></layout-header>
         <div id="main" v-if="!loading">
             <div class="pic" v-for="item in picArr">
                 <img class="pic__body" :src="item.url">
@@ -74,8 +53,12 @@
 </template>
 
 <script type="text/javascript">
+  import layoutHeader from './layout-header.vue'
 	let showUploading
 	export default {
+	  components: {
+      layoutHeader
+    },
 		data() {
 			return {
 				// 图片对象数组
@@ -166,22 +149,6 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     #wrapper
         background #eee
-
-    #header
-        height 50px
-        line-height 50px
-        background #FFF
-        box-shadow 0 1px 1px rgba(0, 0, 0, 0.08)
-
-    .header__body
-        width 90%
-        margin 0 auto
-
-    .header__nav, .header__logo, .header__uploader
-        display inline-block
-
-    .header__nav
-        float right
 
     #main
         margin 20px auto
