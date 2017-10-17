@@ -1,5 +1,5 @@
-var webpack = require('webpack');
-var path = require('path');
+var webpack = require('webpack'); // 引入webpack
+var path = require('path'); // 引入pdth模块
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var autoprefixer = require('autoprefixer')
 
@@ -19,7 +19,6 @@ module.exports = {
 	      // 是否插入script等标签
     	  inject: true,
 	    }),
-	    // new webpack.optimize.OccurenceOrderPlugin(),
 	    new webpack.HotModuleReplacementPlugin(),
 	    new webpack.NoErrorsPlugin(),
 	    new webpack.LoaderOptionsPlugin({
@@ -31,7 +30,7 @@ module.exports = {
 		   },
 		    // 非vue文件中的纯样式部分的postcss配置
 		    postcss: [
-				// 添加浏览器前缀
+				// 添加浏览器前缀，兼容绝大部分浏览器
 				autoprefixer({browsers: '> 1%'})
 			],
 		    // vue-loader配置
