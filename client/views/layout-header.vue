@@ -20,19 +20,21 @@
   </div>
 </template>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  #header
-    height 50px
+  #header {
+    height 50px 
     line-height 50px
     background #FFF
     box-shadow 0 1px 1px rgba(0, 0, 0, 0.08)
 
-  .header__body
-    width 90%
-    margin 0 auto
+    .header__body
+      width 90%
+      margin 0 auto
 
-  .header__nav, .header__logo, .header__uploader
-    display inline-block
+    .header__nav, .header__logo, .header__uploader
+      display inline-block
 
-  .header__nav
-    float right
+    .header__nav
+      float right
+  }
+   
 </style>

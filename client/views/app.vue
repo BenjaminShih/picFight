@@ -7,6 +7,7 @@
 <script type="text/javascript">
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-    .app-body
+    .app-body {
       height 100%
+    }
 </style>
