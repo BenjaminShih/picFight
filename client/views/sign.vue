@@ -83,17 +83,21 @@
     }
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-    .sign-wrapper
+    .sign-wrapper {
       height 100%
       width 100%
       position relative
-    .sign-body
+    }
+    .sign-body {
       position absolute
       left 50%
       top 50%
       transform translateX(-50%) translateY(-50%)
-    .sign-in-btn
+    }
+    .sign-in-btn {
       margin-top 30px
-    .sign-up-btn
+    }
+    .sign-up-btn {
       margin-top 20px
+    }
 </style>
